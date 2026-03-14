@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Nexus Cloud</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" sizes="500×500" href="{{ url_for('static', filename='logo.png') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="top-nav">
+        <div class="logo" style="display: flex; align-items: center; gap: 10px;">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="height: 30px;">
+            <span>Nexus Cloud</span>
+        </div>
+        <div class="action-bar">
+            <div id="upload-btn-container" style="position: relative;">
+                <button class="btn btn-outline" onclick="toggleUploadMenu()">업로드 ▼</button>
+                <div class="dropdown-menu" id="upload-dropdown">
+                    <div class="dropdown-item" onclick="triggerUpload(false)">파일 업로드</div>
+                    <div class="dropdown-item" onclick="triggerUpload(true)">폴더 업로드</div>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="downloadSelected()">다운로드</button>
+            <a href="{{ url_for('logout') }}" class="btn" style="color: var(--text-secondary); text-decoration: none;">로그아웃</a>
+        </div>
+    </div>
+
+    <div class="main-layout">
+        <div class="sidebar">
+            <div class="menu-item active" id="menu-home" onclick="loadFiles('home')">내 클라우드</div>
+            <div class="menu-item" id="menu-recent" onclick="loadFiles('recent')">최근 항목</div>
+            <div class="menu-item" id="menu-important" onclick="loadFiles('important')">중요 문서</div>
+            <div class="menu-item" id="menu-trash" onclick="loadFiles('trash')">휴지통</div>
+
+            <div class="quota-widget">
+                <div class="quota-header">
+                    <span>저장 공간</span>
+                    <span id="quota-text">0 B / 10 GB</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="quota-fill"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-area">
+            <div style="display: flex; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                <h2 id="category-title" style="margin: 0; font-weight: 500; font-size: 18px;">내 클라우드</h2>
+                <div id="breadcrumb-divider" style="margin: 0 15px; color: var(--text-secondary); display: none;">|</div>
+                <div id="breadcrumb" style="font-size: 14px; display: flex; gap: 8px; align-items: center;"></div>
+            </div>
+            <div class="file-grid" id="file-grid"></div>
+        </div>
+        
+        <div class="info-panel">
+            <h3 style="margin-bottom: 15px; font-size: 14px; color: var(--accent);">파일 정보</h3>
+            <div class="preview-box" id="preview-box">
+                <span style="color:var(--text-secondary); font-size:12px;">파일을 선택하세요</span>
+            </div>
+            
+            <div class="detail-item">
+                <div class="detail-label">이름</div>
+                <div class="detail-value" id="detail-name">-</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">크기</div>
+                <div class="detail-value" id="detail-size">-</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="context-menu" class="context-menu"></div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
