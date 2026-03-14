@@ -166,7 +166,7 @@ def login():
         session.permanent = True
         user_id = request.form['user_id']
         password = request.form['password']
-        if user_id == 'muel2962' and password == '!samuel0602!':
+        if user_id == 'admin' and password == 'admin123':
             session['user_id'] = 'admin'
             return redirect(url_for('admin_dashboard'))
         conn = get_db(USER_DB)
